@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>クニューン語動詞形成ジェネレーター</title>
+</head>
+<body>
+    <h1>クニューン語動詞形成ジェネレーター</h1>
+    <label for="verbType">動詞の種類を選択してください:</label>
+    <select id="verbType">
+        <option value="intransitive">自動詞</option>
+        <option value="transitive">他動詞</option>
+        <option value="intermediate">間目動詞</option>
+    </select>
+    <br><br>
+    <label for="inputWord">単語を入力してください:</label>
+    <input type="text" id="inputWord">
+    <br><br>
+    <button onclick="generateVerb()">生成</button>
+    <br><br>
+    <p id="result"></p>
+
+    <script>
+        function generateVerb() {
+            const verbType = document.getElementById('verbType').value;
+            const inputWord = document.getElementById('inputWord').value;
+            let prefix = '';
+            let suffix = '';
+
+            if (verbType === 'intransitive') {
+                prefix = 'ba=';
+                suffix = /[aeiuíú]$/.test(inputWord) ? '-hr-ab-a' : '-uhr-ab-a';
+            } else if (verbType === 'transitive') {
+                prefix = 'ga=';
+                suffix = /[aeiuíú]$/.test(inputWord) ? '-f-ab-a' : '-uf-ab-a';
+            } else if (verbType === 'intermediate') {
+                prefix = 'da=';
+                suffix = /[aeiuíú]$/.test(inputWord) ? '-x-ab-a' : '-ux-ab-a';
+            }
+
+            const result = prefix + inputWord + suffix;
+            document.getElementById('result').innerText = `生成された動詞: ${result}`;
+        }
+    </script>
+</body>
+</html>
